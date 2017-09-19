@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-import wpilib
-#!/usr/bin/env python3
-
 import wpilib # <---- main library with all the necessary code for controlling FRC robots
 import wpilib.buttons # <---- for joystick buttons
 
