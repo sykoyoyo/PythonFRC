@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-'''
-    This is a demo program showing how to use Mecanum control with the
-    RobotDrive class.
-    '''
+
 
 import wpilib
+import wpilib.buttons
 from wpilib import RobotDrive
 
 class MyRobot(wpilib.IterativeRobot):
@@ -39,6 +37,14 @@ class MyRobot(wpilib.IterativeRobot):
         self.winch_motor1 = wpilib.Talon(self.winchMotor1)
         
         self.stick = wpilib.Joystick(self.joystickChannel)
+        
+        self.fire_single_piston = wpilib.buttons.JoystickButton(self.stick, 1)
+        self.fire_double_forward = wpilib.buttons.JoystickButton(self.stick, 2)
+        self.fire_double_backward = wpilib.buttons.JoystickButton(self.stick, 3)
+    
+        self.single_solenoid = wpilib.Solenoid(1)
+        self.double_solenoid = wpilib.DoubleSolenoid(2,3)
+    
     
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
@@ -52,7 +58,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         self.robotDrive.mecanumDrive_Cartesian(self.stick.getX(),
                                                 self.stick.getY(),
-                                                self.stick.getRawAxis(5), 0);
+                                                self.stick.getRawAxis(4), 0);
                                                    
         if self.stick.getRawButton(3):
                 self.winch_motor2.set(1)
@@ -66,6 +72,16 @@ class MyRobot(wpilib.IterativeRobot):
                                                    
         wpilib.Timer.delay(0.005)
 
+        if (self.fire_single_piston.get()):
+            self.single_solenoid.set(True)
+        else:
+            self.single_solenoid.set(False)
+
+        if (self.fire_double_forward.get()):
+            self.double_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+
+        elif (self.fire_double_backward.get()):
+            self.double_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
 
 
 if __name__ == '__main__':
