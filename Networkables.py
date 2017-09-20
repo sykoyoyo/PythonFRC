@@ -12,7 +12,7 @@ class MyRobot(wpilib.IterativeRobot):
     
     '''Insert early definitions for Channels of Speed controls'''
     
-    # Channels for the wheels
+    # Channels for the wheels and motors
     frontLeftChannel    = 2
     rearLeftChannel     = 3
     frontRightChannel   = 1
@@ -52,10 +52,12 @@ class MyRobot(wpilib.IterativeRobot):
     
     def autonomousInit(self):
         '''Runs once each time the robot enters in Auto Mode'''
+
         self.auto_loop_counter = 0
     
     def autonomousPeriodic(self):
         '''called periodically during Autonomous'''
+        
         if self.auto_loop_counter < 100:
             self.robotDrive.drive(-0.5, 0)
             self.auto_loop_counter +=1
