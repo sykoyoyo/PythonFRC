@@ -4,6 +4,9 @@
 import wpilib
 import wpilib.buttons
 from wpilib import RobotDrive
+import networktables
+from robotpy_ext.common_drivers import navx
+
 
 class MyRobot(wpilib.IterativeRobot):
     
@@ -47,7 +50,19 @@ class MyRobot(wpilib.IterativeRobot):
         self.single_solenoid = wpilib.Solenoid(1)
         self.double_solenoid = wpilib.DoubleSolenoid(2,3)
     
+    def autonomousInit(self):
+        '''Runs once each time the robot enters in Auto Mode'''
+        self.auto_loop_counter = 0
     
+    def autonomousPeriodic(self):
+        '''called periodically during Autonomous'''
+        if self.auto_loop_counter < 100:
+            self.robotDrive.drive(-0.5, 0)
+            self.auto_loop_counter +=1
+        else:
+            self.robotDrive.drive(0,0)
+
+
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
         
@@ -83,6 +98,10 @@ class MyRobot(wpilib.IterativeRobot):
         elif (self.fire_double_backward.get()):
             self.double_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
 
+
+    def testPeriodic(self):
+            '''Function called periodically during Test Mode'''
+        wpilib.LiveWindow.run()
 
 if __name__ == '__main__':
     wpilib.run(MyRobot)
