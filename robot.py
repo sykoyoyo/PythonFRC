@@ -56,9 +56,9 @@ class MyRobot(wpilib.IterativeRobot):
         
             
 
-        self.robotDrive.mecanumDrive_Cartesian(self.stick.getX(),
+        self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),
                                                 self.stick.getY(),
-                                                self.stick.getRawAxis(4), 0);
+                                                self.stick.getX(), 0);
                                                    
         if self.stick.getRawButton(3):
                 self.winch_motor2.set(1)
@@ -69,8 +69,6 @@ class MyRobot(wpilib.IterativeRobot):
         else:
                 self.winch_motor1.set(0)
                 self.winch_motor2.set(0)
-                                                   
-        wpilib.Timer.delay(0.005)
 
         if (self.fire_single_piston.get()):
             self.single_solenoid.set(True)
