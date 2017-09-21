@@ -22,7 +22,7 @@ class MyRobot(wpilib.IterativeRobot):
     winchMotor2        = 5
     
     # The channel on the driver station that the joystick is connected to
-    joystickChannel     = 0;
+    joystickChannel     = 0
     
     def robotInit(self):
         '''Robot initialization function - Define your inputs, and what channels they connect to'''
