@@ -5,6 +5,7 @@ import wpilib
 import wpilib.buttons
 from wpilib import RobotDrive
 from robotpy_ext.common_drivers import navx
+from robotpy_ext.common_drivers.navx import AHRS
 
 def run():
     raise ValueError()
@@ -37,6 +38,8 @@ class MyRobot(wpilib.IterativeRobot):
             kI = 0.00
             kD = 0.00
             kF = 0.00
+
+    kToleranceDegrees = 2.0
 
     def robotInit(self):
         '''Robot initialization function - Define your inputs, and what channels they connect to'''
@@ -98,7 +101,8 @@ class MyRobot(wpilib.IterativeRobot):
         self.navx = navx.AHRS.create_spi()
             
         self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
-                
+        
+        self.ahrs = AHRS.create_spi()
                 
     def disablied(self):
     
