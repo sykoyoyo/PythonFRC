@@ -152,7 +152,7 @@ class MyRobot(wpilib.IterativeRobot):
         
         self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),
                                                 self.stick.getY(),
-                                                self.stick.getX(), 0);
+                                                self.stick.getX(), self.ahrs.getAngle())
         #Winch Motor Commands
 
         if self.stick.getRawButton(9):
