@@ -85,7 +85,21 @@ class MyRobot(wpilib.IterativeRobot):
         self.navx = navx.AHRS.create_spi()
             
         self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
+
+        if.wpilib.RobotBase.isSimulation():
+            kP = 0.06
+            kI = 0.00
+            kD = 0.00
+            kF = 0.00
+
+        else:
             
+            kP = 0.03
+            kI = 0.00
+            kD = 0.00
+            kF = 0.00
+                
+                
     def disablied(self):
     
         self.logger.info("Enter disabled mode")
