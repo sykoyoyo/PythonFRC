@@ -102,7 +102,8 @@ class MyRobot(wpilib.IterativeRobot):
             
         self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
         
-        self.ahrs = AHRS.create_spi()
+        #Navx Controller Inputs
+        TurnController = wpilib.PIDController(
                 
     def disablied(self):
     
