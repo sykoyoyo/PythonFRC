@@ -84,8 +84,8 @@ class MyRobot(wpilib.IterativeRobot):
         #Pneumatics Code
     
         self.fire_single_piston = wpilib.buttons.JoystickButton(self.stick, 3)
-        self.fire_double_forward = wpilib.buttons.JoystickButton(self.stick, 2)
-        self.fire_double_backward = wpilib.buttons.JoystickButton(self.stick, 1)
+        self.fire_double_forward = wpilib.buttons.JoystickButton(self.stick, 7)
+        self.fire_double_backward = wpilib.buttons.JoystickButton(self.stick, 8)
     
         self.single_solenoid = wpilib.Solenoid(1)
         self.double_solenoid = wpilib.DoubleSolenoid(2,3)
@@ -150,7 +150,7 @@ class MyRobot(wpilib.IterativeRobot):
         rotateToAngle = False
 
         if self.stick.getRawButton(4):
-            self.ahrs.reset()
+            self.navx.reset()
         
         if self.stick.getRawButton(2):
             self.turnController.setSetpoint(0.0)
