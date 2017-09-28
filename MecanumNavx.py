@@ -103,7 +103,7 @@ class MyRobot(wpilib.IterativeRobot):
         turnController = wpilib.PIDController(self.kP, self.kI, self.kD, self.kF, self.navx, output=self)
         turnController.setInputRange(-180.0, 180.0)
         turnController.setOutputRange(-1.0, 1.0)
-        turnController.setAbsoluteTolerance(self.kTolerenceDegrees)
+        turnController.setAbsoluteTolerance(2.0)
         turnController.setContinuous(True)
 
         self.turnController = turnController
@@ -144,8 +144,7 @@ class MyRobot(wpilib.IterativeRobot):
         
         #NavX Print Angle/Degrees
 
-        if tm.hasPeriodPassed(1.0):
-            print("NavX Gyro", self.ahrs.getYaw(), self.ahrs.getAngle())
+        print("NavX Gyro", self.navx.getYaw(), self.navx.getAngle())
         
         #NavX Rotation Commands
         rotateToAngle = False
@@ -167,7 +166,7 @@ class MyRobot(wpilib.IterativeRobot):
         #MecanumDrive Command
         
         self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),self.stick.getY(),
-                                                self.stick.getX(), self.ahrs.getAngle())
+                                                self.stick.getX(), self.navx.getAngle())
         #Winch Motor Commands
 
         if self.stick.getRawButton(9):
