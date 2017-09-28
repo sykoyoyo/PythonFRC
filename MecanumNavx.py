@@ -119,18 +119,42 @@ class MyRobot(wpilib.IterativeRobot):
 
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
-        
-        pass
+        tm = wpilib.Timer()
+        tm.start()
+    
     
     def teleopPeriodic(self):
         '''Runs the motors, Button controls, solenoids etc'''
         
-            
+        #NavX Print Angle/Degrees
 
+        if tm.hasPeriodPassed(1.0):
+            print("NavX Gyro", self.ahrs.getYaw(), self.ahrs.getAngle())
+        
+        #NavX Rotation Commands
+        rotateToAngle = False
+
+        if self.stick.getRawButton(4):
+            self.ahrs.reset()
+        
+        if self.stick.getRawButton(2):
+            self.turnController.setSetpoint(0.0)
+            rotateToAngle = True
+                    
+        if rotateToAngle:
+            self.turnController.enable()
+            currentRotationRate = self.rotateToAngleRate
+        else:
+            self.turnController.disable()
+            currentRotationRate = self.stick.getTwist()
+
+        #MecanumDrive Command
+        
         self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),
                                                 self.stick.getY(),
                                                 self.stick.getX(), 0);
-                                                   
+        #Winch Motor Commands
+
         if self.stick.getRawButton(9):
             self.winch_motor2.set(1)
             self.winch_motor1.set(1)
@@ -140,7 +164,9 @@ class MyRobot(wpilib.IterativeRobot):
         else:
             self.winch_motor1.set(0)
             self.winch_motor2.set(0)
-
+        
+        #Pneumatics Commands
+        
         if (self.fire_single_piston.get()):
             self.single_solenoid.set(True)
         else:
