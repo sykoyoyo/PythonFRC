@@ -179,5 +179,9 @@ class MyRobot(wpilib.IterativeRobot):
             self.double_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
 
 
+    def pidWrite (self, output):
+
+        self.rotateToAngleRate = output
+
 if __name__ == '__main__':
     wpilib.run(MyRobot)
