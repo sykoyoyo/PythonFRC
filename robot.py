@@ -53,9 +53,9 @@ class MyRobot(wpilib.IterativeRobot):
         
         self.stick = wpilib.Joystick(self.joystickChannel)
         
-        self.fire_single_piston = wpilib.buttons.JoystickButton(self.stick, 1)
+        self.fire_single_piston = wpilib.buttons.JoystickButton(self.stick, 3)
         self.fire_double_forward = wpilib.buttons.JoystickButton(self.stick, 2)
-        self.fire_double_backward = wpilib.buttons.JoystickButton(self.stick, 3)
+        self.fire_double_backward = wpilib.buttons.JoystickButton(self.stick, 1)
     
         self.single_solenoid = wpilib.Solenoid(1)
         self.double_solenoid = wpilib.DoubleSolenoid(2,3)
@@ -75,10 +75,10 @@ class MyRobot(wpilib.IterativeRobot):
                                                 self.stick.getY(),
                                                 self.stick.getX(), 0);
                                                    
-        if self.stick.getRawButton(3):
+        if self.stick.getRawButton(9):
                 self.winch_motor2.set(1)
                 self.winch_motor1.set(1)
-        elif self.stick.getRawButton(4):
+        elif self.stick.getRawButton(10):
                 self.winch_motor1.set(-1)
                 self.winch_motor2.set(-1)
         else:
