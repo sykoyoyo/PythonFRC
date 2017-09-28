@@ -13,10 +13,10 @@ class MyRobot(wpilib.IterativeRobot):
     frontLeftChannel    = 2
     rearLeftChannel     = 3
     frontRightChannel   = 1
-    rearRightChannel    = 0
+    rearRightChannel    = 4
     
-    winchMotor1        = 4
-    winchMotor2        = 5
+    winchMotor1        = 5
+    winchMotor2        = 6
     
     # The channel on the driver station that the joystick is connected to
     joystickChannel     = 0;
@@ -24,10 +24,23 @@ class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
         '''Robot initialization function - Define your inputs, and what channels they connect to'''
 
-        self.robotDrive = wpilib.RobotDrive(self.frontLeftChannel,
-                                            self.rearLeftChannel,
-                                            self.frontRightChannel,
-                                            self.rearRightChannel)
+        if not wpilib.RobotBase.isSimulation():
+        
+            self.FLC = ctre.CANTalon(self.rearRightChannel)
+            self.FRC = ctre.CANTalon(self.rearLeftChannel)
+            self.BLC = ctre.CANTalon(self.frontLeftChannel)
+            self.BRC = ctre.CANTalon(self.frontRightChannel)
+
+        else:
+            self.FLC = wpilib.Talon(self.rearRightChannel)
+            self.FRC = wpilib.Talon(self.rearLeftChannel)
+            self.BLC = wpilib.Talon(self.frontLeftChannel)
+            self.BRC = wpilib.Talon(self.frontRightChannel)
+
+        self.robotDrive = wpilib.RobotDrive(self.FLC,
+                                            self.BLC,
+                                            self.FRC,
+                                            self.BRC)
             
         self.robotDrive.setExpiration(0.1)
 
