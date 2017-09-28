@@ -6,8 +6,6 @@ import wpilib.buttons
 from wpilib import RobotDrive
 from robotpy_ext.common_drivers import navx
 
-def run():
-    raise ValueError()
 
 class MyRobot(wpilib.IterativeRobot):
     
