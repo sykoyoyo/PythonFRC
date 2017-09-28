@@ -23,9 +23,10 @@ class MyRobot(wpilib.IterativeRobot):
     winchMotor2        = 6
     
     # The channel on the driver station that the joystick is connected to
-    joystickChannel     = 0;
+    # joystickChannel     = 0; <---- the semi colon comes back to haunt your code again
+    joystickChannel = 0
     
-    if.wpilib.RobotBase.isSimulation():
+    if wpilib.RobotBase.isSimulation():
             kP = 0.06
             kI = 0.00
             kD = 0.00
@@ -64,7 +65,7 @@ class MyRobot(wpilib.IterativeRobot):
                                             self.FRC,
                                             self.BRC)
             
-        self.robotDrive.setExpiration(0.1)
+        # self.robotDrive.setExpiration(0.1) <--- Don't need this when in iterative
         
         #Invert two Drive Motors for Mecanum
         
@@ -97,16 +98,18 @@ class MyRobot(wpilib.IterativeRobot):
         
         self.navx = navx.AHRS.create_spi()
             
-        self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
+        # self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0)) 
+        # ^^^^ we use the AHRS connection (aka putting the navx on the MXP port ontop of the RIO
                 
                 
-    def disablied(self):
+    # def disablied(self): <--- wrong function name
+    def disabledPeriodic(self):
     
-        self.logger.info("Enter disabled mode")
-    
-        self.timer.reset()
-        self.timer.start()
-    
+        # Just put the yaw value into networktables as a test
+        self.sd.putNumber('Yaw', self.navx.getYaw())
+        
+        """
+        # This is sample robot stuff. You will never have a while loop in iterative
         while self.isDisabled():
     
             if self.timer.hasPeriodPassed(0.5):
@@ -121,7 +124,8 @@ class MyRobot(wpilib.IterativeRobot):
                 self.sd.putNumber('Timestamp', self.navx.getLastSensorTimestamp())
 
             wpilib.Timer.delay(0.010)
-    
+        """
+        
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
         
@@ -137,14 +141,14 @@ class MyRobot(wpilib.IterativeRobot):
                                                 self.stick.getX(), 0);
                                                    
         if self.stick.getRawButton(9):
-                self.winch_motor2.set(1)
-                self.winch_motor1.set(1)
+            self.winch_motor2.set(1)
+            self.winch_motor1.set(1)
         elif self.stick.getRawButton(10):
-                self.winch_motor1.set(-1)
-                self.winch_motor2.set(-1)
+            self.winch_motor1.set(-1)
+            self.winch_motor2.set(-1)
         else:
-                self.winch_motor1.set(0)
-                self.winch_motor2.set(0)
+            self.winch_motor1.set(0)
+            self.winch_motor2.set(0)
 
         if (self.fire_single_piston.get()):
             self.single_solenoid.set(True)
