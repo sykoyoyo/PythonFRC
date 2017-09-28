@@ -6,8 +6,6 @@ import wpilib.buttons
 from wpilib import RobotDrive
 from robotpy_ext.common_drivers import navx
 
-def run():
-    raise ValueError()
 
 class MyRobot(wpilib.IterativeRobot):
     
@@ -77,36 +75,8 @@ class MyRobot(wpilib.IterativeRobot):
         self.single_solenoid = wpilib.Solenoid(1)
         self.double_solenoid = wpilib.DoubleSolenoid(2,3)
     
-        #NavX Code
-    
-        self.sd = wpilib.SmartDashboard
-        self.timer = wpilib.Timer()
-        
-        self.navx = navx.AHRS.create_spi()
-            
-        self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
-            
-    def disablied(self):
-    
-        self.logger.info("Enter disabled mode")
-    
-        self.timer.reset()
-        self.timer.start()
-    
-        while self.isDisabled():
-    
-            if self.timer.hasPeriodPassed(0.5):
-                self.sd.putBoolean('SupportsDisplacement', self.navx._isDisplacementSupported())
-                self.sd.putBoolean('IsCalibrating', self.navx._isCalibrating())
-                self.sd.putBoolean('IsConnected', self.navx.IsConnected())
-                self.sd.putNumber('Angle', self.navx.getAngle())
-                self.sd.putNumber('Pitch', self.navx.getPitch())
-                self.sd.putNumber('Yaw', self.navx.getYaw())
-                self.sd.putNumber('roll', self.navx.getRoll())
-                self.sd.putNumber('Analog', self.analog,getVoltage())
-                self.sd.putNumber('Timestamp', self.navx.getLastSensorTimestamp())
 
-            wpilib.Timer.delay(0.010)
+
     
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
