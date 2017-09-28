@@ -7,9 +7,6 @@ from wpilib import RobotDrive
 from robotpy_ext.common_drivers import navx
 from robotpy_ext.common_drivers.navx import AHRS
 
-def run():
-    raise ValueError()
-
 class MyRobot(wpilib.IterativeRobot):
     
     '''Insert early definitions for Channels of Speed controls'''
@@ -24,9 +21,9 @@ class MyRobot(wpilib.IterativeRobot):
     winchMotor2        = 6
     
     # The channel on the driver station that the joystick is connected to
-    joystickChannel     = 0;
+    joystickChannel     = 0
     
-    if.wpilib.RobotBase.isSimulation():
+    if wpilib.RobotBase.isSimulation():
             kP = 0.06
             kI = 0.00
             kD = 0.00
@@ -115,28 +112,11 @@ class MyRobot(wpilib.IterativeRobot):
         wpilib.LiveWindow.addActuator("DriveSystem", "RotateController", turnController)
 
 
-    def disablied(self):
+    def disabledPeriodic(self):
     
-        self.logger.info("Enter disabled mode")
+            self.sd.putNumber('Yaw', self.navx.getYaw())
     
-        self.timer.reset()
-        self.timer.start()
-    
-        while self.isDisabled():
-    
-            if self.timer.hasPeriodPassed(0.5):
-                self.sd.putBoolean('SupportsDisplacement', self.navx._isDisplacementSupported())
-                self.sd.putBoolean('IsCalibrating', self.navx._isCalibrating())
-                self.sd.putBoolean('IsConnected', self.navx.IsConnected())
-                self.sd.putNumber('Angle', self.navx.getAngle())
-                self.sd.putNumber('Pitch', self.navx.getPitch())
-                self.sd.putNumber('Yaw', self.navx.getYaw())
-                self.sd.putNumber('roll', self.navx.getRoll())
-                self.sd.putNumber('Analog', self.analog,getVoltage())
-                self.sd.putNumber('Timestamp', self.navx.getLastSensorTimestamp())
 
-            wpilib.Timer.delay(0.010)
-    
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
         
@@ -152,14 +132,14 @@ class MyRobot(wpilib.IterativeRobot):
                                                 self.stick.getX(), 0);
                                                    
         if self.stick.getRawButton(9):
-                self.winch_motor2.set(1)
-                self.winch_motor1.set(1)
+            self.winch_motor2.set(1)
+            self.winch_motor1.set(1)
         elif self.stick.getRawButton(10):
-                self.winch_motor1.set(-1)
-                self.winch_motor2.set(-1)
+            self.winch_motor1.set(-1)
+            self.winch_motor2.set(-1)
         else:
-                self.winch_motor1.set(0)
-                self.winch_motor2.set(0)
+            self.winch_motor1.set(0)
+            self.winch_motor2.set(0)
 
         if (self.fire_single_piston.get()):
             self.single_solenoid.set(True)
