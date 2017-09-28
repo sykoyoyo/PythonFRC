@@ -100,7 +100,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
         
         #Navx Controller Inputs
-        turnController = wpilib.PIDController(self.kP, self.kI, self.kD, self.kF, self.ahrs, output=self)
+        turnController = wpilib.PIDController(self.kP, self.kI, self.kD, self.kF, self.navx, output=self)
         turnController.setInputRange(-180.0, 180.0)
         turnController.setOutputRange(-1.0, 1.0)
         turnController.setAbsoluteTolerance(self.kTolerenceDegrees)
@@ -115,12 +115,28 @@ class MyRobot(wpilib.IterativeRobot):
     def disabledPeriodic(self):
     
             self.sd.putNumber('Yaw', self.navx.getYaw())
-    
 
+    #Autonomous setups
+
+    def autonomousInit(self):
+        
+        self.auto_motor=0
+        self.auto_state=0
+        self.ready_aline=False
+        self.auto_aline_auto=False
+        self.auto_drive1=0
+        self.auto_drive2=0
+        self.state=5
+        self.navx.reset()
+    
+    
+    
     def teleopInit(self):
         ''' runs Sensors and timers etc'''
         tm = wpilib.Timer()
         tm.start()
+        self.navx.reset()
+    
     
     
     def teleopPeriodic(self):
@@ -150,8 +166,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         #MecanumDrive Command
         
-        self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),
-                                                self.stick.getY(),
+        self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),self.stick.getY(),
                                                 self.stick.getX(), self.ahrs.getAngle())
         #Winch Motor Commands
 
