@@ -103,8 +103,18 @@ class MyRobot(wpilib.IterativeRobot):
         self.analog = wpilib.AnalogInput(navx.getNavxAnalogInChannel(0))
         
         #Navx Controller Inputs
-        TurnController = wpilib.PIDController(
-                
+        turnController = wpilib.PIDController(self.kP, self.kI, self.kD, self.kF, self.ahrs, output=self)
+        turnController.setInputRange(-180.0, 180.0)
+        turnController.setOutputRange(-1.0, 1.0)
+        turnController.setAbsoluteTolerance(self.kTolerenceDegrees)
+        turnController.setContinuous(True)
+
+        self.turnController = turnController
+
+        #Add PID Controller to Dashboard
+        wpilib.LiveWindow.addActuator("DriveSystem", "RotateController", turnController)
+
+
     def disablied(self):
     
         self.logger.info("Enter disabled mode")
