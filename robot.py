@@ -30,6 +30,7 @@ class MyRobot(wpilib.IterativeRobot):
         #also Hack to see on SIM
         
         if not wpilib.RobotBase.isSimulation():
+            import ctre
         
             self.FLC = ctre.CANTalon(self.rearRightChannel)
             self.FRC = ctre.CANTalon(self.rearLeftChannel)
@@ -87,11 +88,11 @@ class MyRobot(wpilib.IterativeRobot):
         '''Runs the motors, Button controls, solenoids etc'''
         
             
+        self.throttle = ((self.stick.getRawAxis(3)*.65)+35) #Throttle drive speed unless pulling axis 3
 
-        self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4),
-                                                self.stick.getY(),
-                                                self.stick.getX(), 0);
-                                                   
+        self.robotDrive.mecanumDrive_Cartesian(self.stick.getX(), self.stick.getY(), self.stick.getRawAxis(4), self.throttle)
+            
+                                                
         if self.stick.getRawButton(9):
                 self.winch_motor2.set(1)
                 self.winch_motor1.set(1)
