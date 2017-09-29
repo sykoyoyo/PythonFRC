@@ -90,8 +90,7 @@ class MyRobot(wpilib.IterativeRobot):
             
         self.throttle = ((self.stick.getRawAxis(3)*.65)+35) #Throttle drive speed unless pulling axis 3
 
-        self.robotDrive.mecanumDrive_Cartesian(self.stick.getX(), self.stick.getY(), self.stick.getRawAxis(4), self.throttle)
-            
+        self.robotDrive.mecanumDrive_Cartesian(self.throttle*self.stick.getX(), self.throttle*self.stick.getY(), self.throttle*self.stick.getRawAxis(4), 0)
                                                 
         if self.stick.getRawButton(9):
                 self.winch_motor2.set(1)
