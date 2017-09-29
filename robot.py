@@ -21,7 +21,7 @@ class MyRobot(wpilib.IterativeRobot):
     winchMotor2        = 6
     
     # The channel on the driver station that the joystick is connected to
-    joystickChannel     = 0;
+    joystickChannel     = 0
     
     def robotInit(self):
         '''Robot initialization function - Define your inputs, and what channels they connect to'''
@@ -88,10 +88,10 @@ class MyRobot(wpilib.IterativeRobot):
         '''Runs the motors, Button controls, solenoids etc'''
         
             
-        self.throttle = ((self.stick.getRawAxis(3)*.65)+35) #Throttle drive speed unless pulling axis 3
-
-        self.robotDrive.mecanumDrive_Cartesian(self.throttle*self.stick.getX(), self.throttle*self.stick.getY(), self.throttle*self.stick.getRawAxis(4), 0)
-                                                
+            #Drive Command
+        self.robotDrive.mecanumDrive_Cartesian(self.stick.getX(), self.stick.getY()**3, self.stick.getRawAxis(4)*.5, 0)
+        
+        #Winch Buttons
         if self.stick.getRawButton(9):
                 self.winch_motor2.set(1)
                 self.winch_motor1.set(1)
@@ -101,12 +101,14 @@ class MyRobot(wpilib.IterativeRobot):
         else:
                 self.winch_motor1.set(0)
                 self.winch_motor2.set(0)
-
+        
+        #Flipper for gear intake
         if (self.fire_single_piston.get()):
             self.single_solenoid.set(True)
         else:
             self.single_solenoid.set(False)
-
+        
+        #Open/Close Gear placer
         if (self.fire_double_forward.get()):
             self.double_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
 
