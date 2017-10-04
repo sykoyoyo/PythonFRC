@@ -88,8 +88,8 @@ class MyRobot(wpilib.IterativeRobot):
         '''Runs the motors, Button controls, solenoids etc'''
         
             
-            #Drive Command
-        self.robotDrive.mecanumDrive_Cartesian(self.stick.getX(), self.stick.getY()**3, self.stick.getRawAxis(4)*.5, 0)
+        #Drive Command
+        self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4), self.stick.getY(), self.stick.getX(), 0)
         
         #Winch Buttons
         if self.stick.getRawButton(9):
