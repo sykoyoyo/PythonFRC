@@ -12,13 +12,13 @@ class MyRobot(wpilib.IterativeRobot):
     '''Insert early definitions for Channels of Speed controls'''
     
     # Channels for the wheels
-    frontLeftChannel    = 2
-    rearLeftChannel     = 3
-    frontRightChannel   = 1
-    rearRightChannel    = 4
+    frontLeftChannel    = 3
+    rearLeftChannel     = 2
+    frontRightChannel   = 4
+    rearRightChannel    = 1
     
-    winchMotor1        = 5
-    winchMotor2        = 6
+    winchMotor1        = 7
+    winchMotor2        = 8
     
     # The channel on the driver station that the joystick is connected to
     joystickChannel     = 0
@@ -32,16 +32,16 @@ class MyRobot(wpilib.IterativeRobot):
         if not wpilib.RobotBase.isSimulation():
             import ctre
         
-            self.FLC = ctre.CANTalon(self.rearRightChannel)
-            self.FRC = ctre.CANTalon(self.rearLeftChannel)
-            self.BLC = ctre.CANTalon(self.frontLeftChannel)
-            self.BRC = ctre.CANTalon(self.frontRightChannel)
+            self.BRC = ctre.CANTalon(self.rearRightChannel)
+            self.BLC = ctre.CANTalon(self.rearLeftChannel)
+            self.FLC = ctre.CANTalon(self.frontLeftChannel)
+            self.FRC = ctre.CANTalon(self.frontRightChannel)
 
         else:
-            self.FLC = wpilib.Talon(self.rearRightChannel)
-            self.FRC = wpilib.Talon(self.rearLeftChannel)
-            self.BLC = wpilib.Talon(self.frontLeftChannel)
-            self.BRC = wpilib.Talon(self.frontRightChannel)
+            self.BRC = wpilib.Talon(self.rearRightChannel)
+            self.BLC = wpilib.Talon(self.rearLeftChannel)
+            self.FLC = wpilib.Talon(self.frontLeftChannel)
+            self.FRC = wpilib.Talon(self.frontRightChannel)
         
         #Defining Mecanum channels
 
@@ -92,10 +92,10 @@ class MyRobot(wpilib.IterativeRobot):
         self.robotDrive.mecanumDrive_Cartesian(self.stick.getRawAxis(4), self.stick.getY(), self.stick.getX(), 0)
         
         #Winch Buttons
-        if self.stick.getRawButton(9):
+        if self.stick.getRawButton(5):
                 self.winch_motor2.set(1)
                 self.winch_motor1.set(1)
-        elif self.stick.getRawButton(10):
+        elif self.stick.getRawButton(6):
                 self.winch_motor1.set(-1)
                 self.winch_motor2.set(-1)
         else:
